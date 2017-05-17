@@ -49,7 +49,7 @@ public class Gui {
 
         // Make sure the program exits when the frame closes
         guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        guiFrame.setTitle("Optics");
+        guiFrame.setTitle("Синтез");
         guiFrame.setSize(400, 300);
 
         // This will center the JFrame in the middle of the screen
@@ -114,6 +114,7 @@ public class Gui {
 
         JComponent panel2 = new JPanel();
         panel2.add(results2Step);
+        panel2.add(new JButton("График")); // TODO after main bugfix
         tabbedPane.addTab("Шаг 2", panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
