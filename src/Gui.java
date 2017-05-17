@@ -13,11 +13,13 @@ public class Gui {
     private Engine engine = null;
     private final Params params = new Params();
 
-    private JFrame guiFrame;
-
     // Fields
     private final JTextField gField = new JTextField();
     private final JTextField dField = new JTextField();
+    private final JTextField tOutField = new JTextField();
+    private final JTextField tInField = new JTextField();
+    private final JTextField twoWField = new JTextField();
+    private final JTextField nField = new JTextField();
 
     // Results
     private final JLabel results1Step = new JLabel();
@@ -25,29 +27,25 @@ public class Gui {
 
     Gui(final Engine engine)
     {
-        // Engine & Params
         this.engine = engine;
 
         setLayout();
-        setDefaults();
+        setDefaultValues();
 
-        // Init fields and listeners
+        // Init fields and listeners, very bad, I know
         initgField();
         initdField();
-
-        // TODO move dummy values to setDefaults after Labels creation
-        params.settOut(0.025);
-        params.settIn(0);
-        params.setTwoW(7);
-        params.setN(1.5163);
-        // TODO remove this section ^^^
+        inittOutField();
+        inittInField();
+        initTwoWField();
+        initnField();
 
         Results results = engine.compute(params);
         displayResults(results);
     }
 
     void setLayout() {
-        guiFrame = new JFrame();
+        JFrame guiFrame = new JFrame();
 
         // Make sure the program exits when the frame closes
         guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +67,21 @@ public class Gui {
         guiFrame.add(dLabel);
         guiFrame.add(dField);
 
-        // etc...
+        JLabel tOutLabel = new JLabel("t`");
+        guiFrame.add(tOutLabel);
+        guiFrame.add(tOutField);
+
+        JLabel tInLabel = new JLabel("t");
+        guiFrame.add(tInLabel);
+        guiFrame.add(tInField);
+
+        JLabel twoWLabel = new JLabel("2w");
+        guiFrame.add(twoWLabel);
+        guiFrame.add(twoWField);
+
+        JLabel nLabel = new JLabel("n");
+        guiFrame.add(nLabel);
+        guiFrame.add(nField);
 
         final int labelsX = 10, labelsWidth = 20, height = 20;
         final int inputX = labelsX + labelsWidth, inputWidth = 60;
@@ -79,7 +91,17 @@ public class Gui {
         dLabel.setBounds(labelsX, height*2, labelsWidth, height);
         dField.setBounds(inputX, height*2, inputWidth, height);
 
-        // etc...
+        tOutLabel.setBounds(labelsX, height*3, labelsWidth, height);
+        tOutField.setBounds(inputX, height*3, inputWidth, height);
+
+        tInLabel.setBounds(labelsX, height*4, labelsWidth, height);
+        tInField.setBounds(inputX, height*4, inputWidth, height);
+
+        twoWLabel.setBounds(labelsX, height*5, labelsWidth, height);
+        twoWField.setBounds(inputX, height*5, inputWidth, height);
+
+        nLabel.setBounds(labelsX, height*6, labelsWidth, height);
+        nField.setBounds(inputX, height*6, inputWidth, height);
 
 
         // Tabs
@@ -103,14 +125,15 @@ public class Gui {
         guiFrame.setVisible(true);
     }
 
-    void setDefaults() {
-        gField.setText(Double.toString(-10));
-        dField.setText(Double.toString(0.005));
-//        params.settOut(0.025);
-//        params.settIn(0);
-//        params.setTwoW(7);
-//        params.setN(1.5163);
+    void setDefaultValues() {
+        gField.setText("-10");
+        dField.setText("0.005");
+        tOutField.setText("0.025");
+        tInField.setText("0");
+        twoWField.setText("7");
+        nField.setText("1.5163");
     }
+
     /**
      * Listen for changes in the text, update params, launch computation
      */
@@ -160,7 +183,7 @@ public class Gui {
             void anyChange(DocumentEvent e) {
                 Double d = null;
                 try {
-                    d = Double.parseDouble(gField.getText());
+                    d = Double.parseDouble(dField.getText());
                 }
                 catch (NumberFormatException ignored) {
                 }
@@ -169,6 +192,146 @@ public class Gui {
                     return;
                 }
                 params.setD(d);
+                Results results = engine.compute(params);
+                displayResults(results);
+            }
+            public void changedUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void removeUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void insertUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+        });
+    }
+
+    void inittOutField() {
+        try {
+            params.settOut(Double.parseDouble(tOutField.getText()));
+        }
+        catch (NumberFormatException ignored) {
+        }
+
+        tOutField.getDocument().addDocumentListener(new DocumentListener() {
+            void anyChange(DocumentEvent e) {
+                Double tOut = null;
+                try {
+                    tOut = Double.parseDouble(tOutField.getText());
+                }
+                catch (NumberFormatException ignored) {
+                }
+
+                if (tOut == null) {
+                    return;
+                }
+                params.settOut(tOut);
+                Results results = engine.compute(params);
+                displayResults(results);
+            }
+            public void changedUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void removeUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void insertUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+        });
+    }
+
+    void inittInField() {
+        try {
+            params.settIn(Double.parseDouble(tInField.getText()));
+        }
+        catch (NumberFormatException ignored) {
+        }
+
+        tInField.getDocument().addDocumentListener(new DocumentListener() {
+            void anyChange(DocumentEvent e) {
+                Double tIn = null;
+                try {
+                    tIn = Double.parseDouble(tInField.getText());
+                }
+                catch (NumberFormatException ignored) {
+                }
+
+                if (tIn == null) {
+                    return;
+                }
+                params.settIn(tIn);
+                Results results = engine.compute(params);
+                displayResults(results);
+            }
+            public void changedUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void removeUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void insertUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+        });
+    }
+
+    void initTwoWField() {
+        try {
+            params.setTwoW(Double.parseDouble(twoWField.getText()));
+        }
+        catch (NumberFormatException ignored) {
+        }
+
+        twoWField.getDocument().addDocumentListener(new DocumentListener() {
+            void anyChange(DocumentEvent e) {
+                Double twoW = null;
+                try {
+                    twoW = Double.parseDouble(twoWField.getText());
+                }
+                catch (NumberFormatException ignored) {
+                }
+
+                if (twoW == null) {
+                    return;
+                }
+                params.setTwoW(twoW);
+                Results results = engine.compute(params);
+                displayResults(results);
+            }
+            public void changedUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void removeUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+            public void insertUpdate(DocumentEvent e) {
+                anyChange(e);
+            }
+        });
+    }
+
+    void initnField() {
+        try {
+            params.setN(Double.parseDouble(nField.getText()));
+        }
+        catch (NumberFormatException ignored) {
+        }
+
+        nField.getDocument().addDocumentListener(new DocumentListener() {
+            void anyChange(DocumentEvent e) {
+                Double n = null;
+                try {
+                    n = Double.parseDouble(nField.getText());
+                }
+                catch (NumberFormatException ignored) {
+                }
+
+                if (n == null) {
+                    return;
+                }
+                params.setN(n);
                 Results results = engine.compute(params);
                 displayResults(results);
             }
