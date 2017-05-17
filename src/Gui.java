@@ -82,29 +82,19 @@ public class Gui {
         // etc...
 
 
+        // Tabs
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        JComponent panel1 = new JPanel(); //makeTextPanel("Panel #1");
+        JComponent panel1 = new JPanel();
         panel1.add(results1Step);
         tabbedPane.addTab("Шаг 1", panel1);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JComponent panel2 = new JPanel(); //makeTextPanel("Panel #2");
-        panel2.add(new JLabel("Panel #2"));
+        JComponent panel2 = new JPanel();
+        panel2.add(results2Step);
         tabbedPane.addTab("Шаг 2", panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-//        JComponent panel3 = makeTextPanel("Panel #3");
-//        tabbedPane.addTab("Tab 3", icon, panel3,
-//                "Still does nothing");
-//        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-//
-//        JComponent panel4 = makeTextPanel(
-//                "Panel #4 (has a preferred size of 410 x 50).");
-//        panel4.setPreferredSize(new Dimension(410, 50));
-//        tabbedPane.addTab("Tab 4", icon, panel4,
-//                "Does nothing at all");
-//        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
         guiFrame.add(tabbedPane);
         tabbedPane.setBounds(inputX + inputWidth + 10, 10, 250, 200);
 
@@ -114,8 +104,8 @@ public class Gui {
     }
 
     void setDefaults() {
-        gField.setText((new Double(-10)).toString());
-        dField.setText((new Double(0.005)).toString());
+        gField.setText(Double.toString(-10));
+        dField.setText(Double.toString(0.005));
 //        params.settOut(0.025);
 //        params.settIn(0);
 //        params.setTwoW(7);
@@ -207,11 +197,11 @@ public class Gui {
             results1Step.setText("Ошибка (results == null)");
             return;
         }
-        JLabel step1 = new JLabel("<html>First line<br>Second line</html>");
 
-        String res = String.format("<html><pre>" +
+        String res1 = String.format("<html><pre>" +
                 "y0 = %s\t y1 = %s<br>" +
                 "V0 = %s\t V1 = %s<br>" +
+                "<br>" +
                 "A1 = %s<br>" +
                 "B1 = %s<br>" +
                 "C1 = %s<br>" +
@@ -219,6 +209,19 @@ public class Gui {
                 "</pre></html>",
                 fmt(results.y_0), fmt(results.y_1), fmt(results.V_0), fmt(results.V_1),
                 fmt(results.A_1), fmt(results.B_1), fmt(results.C_1), fmt(results.D_1));
-        results1Step.setText(res);
+        results1Step.setText(res1);
+
+        String res2 = String.format("<html><pre>" +
+                        "Ф2 = %s\t y2 = %s<br>" +
+                        "Ф2` = %s\t V2 = %s<br>" +
+                        "<br>" +
+                        "A2 = %s<br>" +
+                        "B2 = %s<br>" +
+                        "C2 = %s<br>" +
+                        "D2 = %s<br>" +
+                        "</pre></html>",
+                fmt(results.F_2), fmt(results.y_2), fmt(results.F_2_ocul), fmt(results.V_2),
+                fmt(results.A_2), fmt(results.B_2), fmt(results.C_2), fmt(results.D_2));
+        results2Step.setText(res2);
     }
 }
