@@ -2,7 +2,6 @@
  * Parameters class to launch Engine
  */
 class Params {
-    private int x;
     private double G; // Телескопическое увеличение Г (0)
     private double D; // Диаметр выходного зрачка – D' (м)
     private double tOut; // Удаление выходного зрачка t' (м)
@@ -11,14 +10,6 @@ class Params {
     private double n; //
 
     Params() {
-    }
-
-    int getX() {
-        return x;
-    }
-
-    void setX(int x) {
-        this.x = x;
     }
 
     double getG() {

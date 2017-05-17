@@ -1,9 +1,7 @@
 /**
  * Results class for Engine. Consist of all important intermediate algorithm's steps results
  */
-public class Results {
-    Integer x0;
-
+class Results {
     // Step 1
     Double y_0, V_0;
     Double y_1, V_1;

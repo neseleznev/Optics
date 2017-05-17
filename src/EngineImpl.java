@@ -11,8 +11,6 @@ class EngineImpl implements Engine {
 
     @Override
     public Results compute(Params params) {
-        int x = params.getX();
-        results.x0 = x * x;
 
         firstStep(params);
 
