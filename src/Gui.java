@@ -35,6 +35,21 @@ public class Gui {
         // Init fields and listeners
         initXField();
 
+        // TODO remove dummy values
+        params.setG(-10);
+        params.setD(0.005);
+        params.settOut(0.025);
+        params.settIn(0);
+        params.setTwoW(7);
+        params.setN(1.5163);
+        engine.compute(params);
+        // TODO remove this section ^^^
+
+
+//        // Using Group Layout
+//        GroupLayout layout = new GroupLayout(guiFrame);
+//        guiFrame.setLayout(layout);
+
 
         // The JFrame uses the BorderLayout layout manager.
         guiFrame.add(xField, BorderLayout.NORTH);
@@ -80,6 +95,15 @@ public class Gui {
         if (results.x0 == null) {
             resultLabel.setText("Ошибка (x0)");
         }
-        resultLabel.setText(results.x0.toString());
+
+        String res = "y0 = " + results.y_0 + "\n" +
+                "V_0 = " + results.V_0 + "\n" +
+                "y1 = " + results.y_1 + "\n" +
+                "V1 = " + results.V_1 + "\n" +
+                "A1 = " + results.A_1 + "\n" +
+                "B1 = " + results.B_1 + "\n" +
+                "C1 = " + results.C_1 + "\n" +
+                "D1 = " + results.D_1 + "\n";
+        resultLabel.setText(res);
     }
 }
